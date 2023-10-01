@@ -1,15 +1,23 @@
 import type { Ads } from "../../app/models/ads.server";
 
+Cypress.setMaxListeners(10);
+
 describe("Collecting Data", () => {
   let page = 1;
 
   before(() => {
     cy.task("db:clearAds");
+    cy.task("log", `Clear DB`);
     cy.visit(`https://www.sreality.cz/en/search/for-sale/apartments`);
+    cy.task(
+      "log",
+      `Open a link "https://www.sreality.cz/en/search/for-sale/apartments"`,
+    );
   });
 
   beforeEach(() => {
     cy.removeAllListeners();
+    cy.clearCookies();
   });
 
   function collectDataOnPage() {
@@ -18,7 +26,7 @@ describe("Collecting Data", () => {
     }
 
     const ads: Ads[] = [];
-    cy.log(`Current page ${page}`);
+    cy.task("log", `Current page ${page}`);
     cy.get(".dir-property-list > div.property")
       .each(($el) => {
         const oneAd = { title: "", images: [] };
@@ -36,6 +44,7 @@ describe("Collecting Data", () => {
         });
 
         ads.push(oneAd);
+        cy.task("log", ` > Items collected ${ads.length + (page - 1) * 20}`);
       })
       .then(() => {
         cy.wrap(ads).should("not.be.empty");

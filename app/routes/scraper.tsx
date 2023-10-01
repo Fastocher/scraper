@@ -1,14 +1,12 @@
 import { Box, Container, Pagination } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import { useState } from "react";
-import { getAd } from "~/models/ads.server";
 import usePagination from "~/utils/pagination";
+import type { loader } from "./_index";
 
 const responsive = {
   desktop: {
@@ -28,12 +26,12 @@ const responsive = {
   },
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const listAds = await getAd();
-  return json({ listAds });
-};
+// export const loader = async ({ request }: LoaderFunctionArgs) => {
+//   const listAds = await getAd();
+//   return json({ listAds });
+// };
 
-const Scraper = () => {
+export const Scraper = () => {
   const [page, setPage] = useState(1);
   const PER_PAGE = 24;
   const data = useLoaderData<typeof loader>();

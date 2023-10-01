@@ -1,6 +1,5 @@
 import { defineConfig } from "cypress";
 
-import { createUser } from "./app/models/user.server";
 import { createAd, clearAds } from "./app/models/ads.server";
 import type { AdsCart } from "@prisma/client";
 
@@ -22,14 +21,6 @@ export default defineConfig({
           console.log(message);
 
           return null;
-        },
-      });
-
-      on("task", {
-        "db:saveUser": async ({ password, email }) => {
-          console.log(password, email);
-
-          return createUser(email, password);
         },
       });
 

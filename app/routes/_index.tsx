@@ -52,6 +52,12 @@ export default function Index() {
                     >
                       Log In
                     </Link>
+                    <Link
+                      to="/scraper"
+                      className="flex items-center justify-center rounded-md bg-blue-500 px-4 py-3 font-medium text-white hover:bg-blue-600"
+                    >
+                      Scraper
+                    </Link>
                   </div>
                 )}
               </div>

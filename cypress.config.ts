@@ -1,5 +1,9 @@
 import { defineConfig } from "cypress";
 
+import { createUser } from "./app/models/user.server";
+import { createAd, clearAds } from "./app/models/ads.server";
+import type { AdsCart } from "@prisma/client";
+
 export default defineConfig({
   e2e: {
     setupNodeEvents: (on, config) => {
@@ -21,7 +25,34 @@ export default defineConfig({
         },
       });
 
+      on("task", {
+        "db:saveUser": async ({ password, email }) => {
+          console.log(password, email);
+
+          return createUser(email, password);
+        },
+      });
+
+      on("task", {
+        "db:createAds": async ({ title, images }: AdsCart) => {
+          return createAd({ title, images });
+        },
+      });
+
+      on("task", {
+        "db:clearAds": async () => {
+          return clearAds();
+        },
+      });
+
       return { ...config, ...configOverrides };
+    },
+  },
+
+  component: {
+    devServer: {
+      framework: "react",
+      bundler: "vite",
     },
   },
 });

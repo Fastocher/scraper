@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   return (
-    <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
+    <main className="relative min-h-screen bg-[#f3f4f6] sm:flex sm:items-center sm:justify-center">
       <Scraper />
     </main>
   );
